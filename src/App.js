@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
 import {useEffect} from "react";
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, Typography} from "@material-ui/core";
 import Plot from 'react-plotly.js';
 
 const useStyles = makeStyles((theme) => ({
@@ -13,13 +13,13 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
     const classes = useStyles();
-    const religions = ["Christians", "Muslims", "Unaffiliated", "Hindus", "Buddhists", "Folk Religions", "Other Religions", "Jews", "All Religions"]
+    const religions = ["Christians", "Muslims", "Unaffiliated", "Hindus", "Buddhists", "Jews", "Folk Religions", "Other Religions"]
 
     const [data, setData] = React.useState([]);
     const [mapData, setMapData] = React.useState([]);
     const [chartData, setChartData] = React.useState([]);
     const [religion, setReligion] = React.useState("Christians")
-    const [country, setCountry] = React.useState("")
+    const [country, setCountry] = React.useState("Ukraine")
 
     useEffect(() => {
         const getData = path => {
@@ -32,7 +32,6 @@ function App() {
                 }
             )
                 .then(response =>{
-                    console.log(response)
                     return response.json()
                 })
                 .then(myJson => {
@@ -44,10 +43,9 @@ function App() {
                             "Unaffiliated": getInt(row["Unaffiliated"].trim()),
                             "Hindus": getInt(row["Hindus"].trim()),
                             "Buddhists": getInt(row["Buddhists"].trim()),
+                            "Jews": getInt(row["Jews"].trim()),
                             "Folk Religions": getInt(row["Folk Religions"].trim()),
                             "Other Religions": getInt(row["Other Religions"].trim()),
-                            "Jews": getInt(row["Jews"].trim()),
-                            "All Religions": getInt(row["All Religions"].trim()),
                     }))
                 });
         }
@@ -56,7 +54,11 @@ function App() {
         getData("Religious_Composition_by_Country_2010-2050.json").then(res => {
             if(mounted) {
                 setData(res)
-                setMapData(res.filter(row => row["Year"] === "2010"))
+                setMapData(res.filter(row => row["Year"] === "2010" && row["Country"] !== "All Countries"))
+                setChartData(res.filter(row => row["Country"] === country).map(row => ({
+                    "Year": row["Year"],
+                    "Value": row[religion]
+                })))
             }
         })
         return () => mounted = false;
@@ -74,7 +76,13 @@ function App() {
         <div className="App">
             <div className="Buttons">
                 {religions.map((religion, index) =>
-                    <Button className={classes.religionButton} variant="contained" key={index} onClick={() => setReligion(religion)}>{religion}</Button>
+                    <Button className={classes.religionButton} variant="contained" key={index} onClick={() => {
+                        setReligion(religion)
+                        setChartData(data.filter(row => row["Country"] === country).map(row => ({
+                            "Year": row["Year"],
+                            "Value": row[religion]
+                        })))
+                    }}>{religion}</Button>
                 )}
             </div>
             <div className="Map">
@@ -83,13 +91,17 @@ function App() {
                         type: 'choropleth',
                         locationmode: 'country names',
                         locations: unpack(mapData, 'Country'),
+                        colorbar: {
+                            title: `Amount of ${religion}`,
+                            thickness: 30
+                        },
+                        autocolorscale: true,
                         z: unpack(mapData, religion),
                         text: unpack(mapData, 'Country'),
-                        autocolorscale: true
                     }]}
                     layout={{
                         title: `Number of ${religion} in 2010`,
-                        width: 800,
+                        width: window.innerWidth * 0.6,
                         height: 800,
                         geo: {
                             projection: {
@@ -97,13 +109,12 @@ function App() {
                             }
                         }
                     }}
-                    onHover={hover => {
+                    onClick={hover => {
                         setCountry(hover['points'][0]['location'])
                         setChartData(data.filter(row => row["Country"] === hover['points'][0]['location']).map(row => ({
                             "Year": row["Year"],
                             "Value": row[religion]
                         })))
-                        console.log(chartData)
                     }}
                 />
                 <Plot
@@ -114,9 +125,13 @@ function App() {
                     }]}
                     layout={{
                         title: `${religion} in ${country} from 2010 to 2050`,
+                        width: window.innerWidth * 0.3,
                     }}
                 />
             </div>
+            <Typography variant="body1" gutterBottom>
+                Click on Country of interest to get detailed info
+            </Typography>
         </div>
     );
 }
