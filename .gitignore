@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# JetBrains
+.idea/
+
+# Other Files
+.eslintcache
+yarn.lock
+package-lock.json
+
