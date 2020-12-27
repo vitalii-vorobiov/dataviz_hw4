@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/dataviz_hw4/static/css/main.ed1c6220.chunk.css",
-    "main.js": "/dataviz_hw4/static/js/main.19b5e35d.chunk.js",
-    "main.js.map": "/dataviz_hw4/static/js/main.19b5e35d.chunk.js.map",
+    "main.css": "/dataviz_hw4/static/css/main.dab9b96c.chunk.css",
+    "main.js": "/dataviz_hw4/static/js/main.ecf70db6.chunk.js",
+    "main.js.map": "/dataviz_hw4/static/js/main.ecf70db6.chunk.js.map",
     "runtime-main.js": "/dataviz_hw4/static/js/runtime-main.66386030.js",
     "runtime-main.js.map": "/dataviz_hw4/static/js/runtime-main.66386030.js.map",
-    "static/js/2.55fbf027.chunk.js": "/dataviz_hw4/static/js/2.55fbf027.chunk.js",
-    "static/js/2.55fbf027.chunk.js.map": "/dataviz_hw4/static/js/2.55fbf027.chunk.js.map",
+    "static/js/2.9c1deea1.chunk.js": "/dataviz_hw4/static/js/2.9c1deea1.chunk.js",
+    "static/js/2.9c1deea1.chunk.js.map": "/dataviz_hw4/static/js/2.9c1deea1.chunk.js.map",
     "index.html": "/dataviz_hw4/index.html",
-    "static/css/main.ed1c6220.chunk.css.map": "/dataviz_hw4/static/css/main.ed1c6220.chunk.css.map",
-    "static/js/2.55fbf027.chunk.js.LICENSE.txt": "/dataviz_hw4/static/js/2.55fbf027.chunk.js.LICENSE.txt"
+    "static/css/main.dab9b96c.chunk.css.map": "/dataviz_hw4/static/css/main.dab9b96c.chunk.css.map",
+    "static/js/2.9c1deea1.chunk.js.LICENSE.txt": "/dataviz_hw4/static/js/2.9c1deea1.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.66386030.js",
-    "static/js/2.55fbf027.chunk.js",
-    "static/css/main.ed1c6220.chunk.css",
-    "static/js/main.19b5e35d.chunk.js"
+    "static/js/2.9c1deea1.chunk.js",
+    "static/css/main.dab9b96c.chunk.css",
+    "static/js/main.ecf70db6.chunk.js"
   ]
 }
